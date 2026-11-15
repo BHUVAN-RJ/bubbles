@@ -27,7 +27,7 @@ You hold up your iPhone and scan the room, Pokemon Go style. Every person nearby
 | Matching AI | Claude Haiku through the team's own proxy on a Mac mini (details pending, see Open items). Called from a Supabase Edge Function. |
 | Onboarding | Name, then a spoken AI interview, then review and approve lines. |
 | Profile lines | Five kinds: ask, offer, identity, looking_for, plan (plan comes from calendar). |
-| Calendar | Read on device, on-device model suggests "plan" lines, user approves each. Raw events never leave the phone. |
+| Calendar | Read with EventKit, Claude (through the proxy) suggests "plan" lines, user approves each. No on-device models (too slow). |
 | Tap a bubble | Opens their card, with Wave and Catch buttons. |
 | Waves | Supabase Realtime, in app only. No push (free Apple account cannot use APNs). |
 | Game layer | Manga % match badge, rarity tiers, Caught collection. No XP or levels. |
@@ -137,7 +137,7 @@ Identity is the device ID (`identifierForVendor`), no login. Row level security 
 1. Type your name.
 2. Interview of 4 to 6 questions. The AI speaks each question with `AVSpeechSynthesizer`; the user answers by voice, transcribed on device with iOS 26 `SpeechAnalyzer` / `SpeechTranscriber`. Edge Function `interview` sends the transcript so far to Claude, which returns either the next question or `done` plus draft lines tagged by kind.
 3. Review screen: each draft line is editable and removable. Save writes `profiles` and `profile_lines`.
-4. Calendar step (optional): EventKit full access, next 7 days. On-device Foundation Models turn events into short plan lines like "Playing tennis Saturday morning". The user ticks which ones go public. Event data never leaves the phone; only approved lines are uploaded. On devices without Apple Intelligence, fall back to a keyword list (tennis, run, climbing, hackathon, coffee) and a template line.
+4. Calendar step (optional): EventKit full access, next 7 days. The app sends event titles and times to Edge Function `calendar_lines`, which asks Claude to turn them into short plan lines like "Playing tennis Saturday morning". Event data is not stored. The user ticks which lines go public; only approved lines are saved. Do not use Apple on-device models (Foundation Models) anywhere; they are too slow.
 
 ### Screens
 
