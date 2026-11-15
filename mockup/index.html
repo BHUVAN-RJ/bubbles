@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bubbles Emulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fredoka:wght@500;600;700&family=Space+Grotesk:wght@500;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@500;700&family=DM+Sans:opsz,wght@9..40,500;9..40,700&family=Manrope:wght@600;800&family=Sora:wght@500;700&family=Silkscreen&family=Bangers&family=Chakra+Petch:wght@600;700&family=VT323&family=Lilita+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="stage">
+  <section class="device-col">
+    <div class="phone" id="phone">
+      <div class="screen" id="screen">
+        <video id="feed" src="assets/feed.mp4" muted playsinline loop autoplay></video>
+        <div class="overlay" id="overlay"></div>
+        <div class="statusbar"><span>9:41</span><span class="island"></span><span class="sb-icons"><i></i><i></i><i></i><b></b></span></div>
+        <div class="me" id="me">
+          <div class="me-avatar">AK</div>
+          <div class="me-text"><strong>You</strong><span>Grad student, CS · systems</span></div>
+        </div>
+        <div class="scanpill" id="scanpill"><span class="scan-dot"></span><span id="scantext">Scanning</span></div>
+        <div class="radar" id="radar">
+          <div class="radar-sweep"></div>
+          <div class="radar-ring r1"></div><div class="radar-ring r2"></div>
+          <div class="radar-me"></div>
+          <div id="blips"></div>
+        </div>
+        <div class="homebar"></div>
+      </div>
+    </div>
+    <div class="transport">
+      <button id="play">Pause</button>
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub">
+      <select id="speed" aria-label="Speed">
+        <option value="0.25">0.25x</option>
+        <option value="0.5" selected>0.5x</option>
+        <option value="1">1x</option>
+      </select>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <header>
+      <h1>Bubbles</h1>
+      <p>Pick a direction. Every switch changes the phone live.</p>
+    </header>
+
+    <div class="group">
+      <label>Direction</label>
+      <div class="presets" id="presets"></div>
+    </div>
+
+    <div class="group grid2">
+      <div><label for="font">Font</label><select id="font"></select></div>
+      <div><label for="shape">Bubble shape</label><select id="shape"></select></div>
+      <div><label for="anim">Entrance</label><select id="anim"></select></div>
+      <div><label for="size">Text size <span id="sizeval"></span></label><input id="size" type="range" min="12" max="22" step="1"></div>
+      <div><label for="accent">Accent</label><input id="accent" type="color"></div>
+      <div><label for="bg">Bubble color</label><input id="bg" type="color"></div>
+    </div>
+
+    <div class="group toggles">
+      <label><input type="checkbox" id="t-radar" checked> Radar</label>
+      <label><input type="checkbox" id="t-me" checked> My profile</label>
+      <label><input type="checkbox" id="t-scan" checked> Scan pill</label>
+      <label><input type="checkbox" id="t-badge" checked> Game badge</label>
+      <label><input type="checkbox" id="t-debug"> Head dots</label>
+    </div>
+
+    <div class="group">
+      <button id="comparegame" class="wide hi">Compare game set</button>
+      <button id="compare" class="wide">Compare all directions</button>
+    </div>
+  </aside>
+</main>
+
+<div class="compare" id="comparebox" hidden>
+  <div class="compare-head"><h2 id="comparetitle">All directions, same frame</h2><button id="closecompare">Close</button></div>
+  <div class="compare-grid" id="comparegrid"></div>
+</div>
+
+<script src="assets/tracks.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
